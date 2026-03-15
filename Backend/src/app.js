@@ -1,9 +1,12 @@
 const express = require('express');
-const authRoute = require('./routes/auth.route');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
 const app = express();
+
+//all routers
+const authRouter = require('./routes/auth.route');
+const interviewRouter = require('./routes/interview.routes');
 
 // Middleware to parse JSON request bodies
 app.use(express.json());
@@ -13,8 +16,9 @@ app.use(cors({
     credentials: true
 }));
 
-
-app.use('/api/auth', authRoute);
+//using all routes
+app.use('/api/auth', authRouter);
+app.use('/api/interview', interviewRouter);
 
 
 module.exports = app;
