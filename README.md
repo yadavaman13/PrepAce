@@ -148,26 +148,26 @@ High-level flow:
 ## 📁 Project Structure
 
 ```text
-GenAI-Resume Analysis/
-  Backend/
-    server.js
-    package.json
-    src/
-      app.js
-      db/
-      routes/
-      controllers/
-      middlewares/
-      models/
-      services/
-  Frontend/
-    package.json
-    vite.config.js
-    src/
-      app.routes.jsx
-      features/
-        auth/
-        interview/
+GenAI-Resume-Analysis/
+├── Backend/
+│   ├── server.js
+│   ├── package.json
+│   └── src/
+│       ├── app.js
+│       ├── db/
+│       ├── routes/
+│       ├── controllers/
+│       ├── middlewares/
+│       ├── models/
+│       └── services/
+└── Frontend/
+    ├── package.json
+    ├── vite.config.js
+    └── src/
+        ├── app.routes.jsx
+        └── features/
+            ├── auth/
+            └── interview/
 ```
 
 ---
