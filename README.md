@@ -17,11 +17,26 @@
   <img src="https://img.shields.io/badge/PDF-Puppeteer-D24939?style=for-the-badge&logo=google-chrome&logoColor=white" alt="Puppeteer" />
 </p>
 
+<p>
+  <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" alt="Status" />
+  <img src="https://img.shields.io/badge/Build-Vite%20Ready-646CFF?style=flat-square" alt="Build" />
+  <img src="https://img.shields.io/badge/Auth-JWT%20Cookies-orange?style=flat-square" alt="Auth" />
+  <img src="https://img.shields.io/badge/AI-Gemini-blue?style=flat-square" alt="AI" />
+  <img src="https://img.shields.io/badge/License-Not%20Set-lightgrey?style=flat-square" alt="License" />
+</p>
+
+<p>
+  <a href="#-getting-started"><strong>Quick Start</strong></a> •
+  <a href="#-deployment-strategy"><strong>Deployment</strong></a> •
+  <a href="#-routes-and-api"><strong>API Routes</strong></a> •
+  <a href="#-contributing"><strong>Contributing</strong></a>
+</p>
+
 </div>
 
 ---
 
-## Table of Contents
+## 📚 Table of Contents
 - [Why PrepAce](#why-prepace)
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
@@ -41,7 +56,7 @@
 
 ---
 
-## Why PrepAce
+## ✨ Why PrepAce
 
 Most candidates struggle with scattered preparation: resume tweaks in one place, mock prep in another, and no clear execution plan.
 
@@ -51,7 +66,7 @@ PrepAce unifies everything in one workflow:
 3. Surface skill gaps and an actionable roadmap
 4. Export a role-tailored, ATS-friendly resume PDF
 
-### What Makes It Stand Out
+### 🌟 What Makes It Stand Out
 - AI-driven strategy instead of generic tips
 - Interview Q&A with intent-focused guidance
 - Day-wise prep planning for execution, not just advice
@@ -60,9 +75,9 @@ PrepAce unifies everything in one workflow:
 
 ---
 
-## Key Features
+## 🎯 Key Features
 
-### Candidate Experience
+### 👤 Candidate Experience
 - Authentication with protected routes
 - Job-description-led analysis
 - Resume upload (PDF) or self-description input
@@ -70,28 +85,28 @@ PrepAce unifies everything in one workflow:
 - Match score and skill-gap insights
 - Downloadable role-tailored PDF resume
 
-### Interview Intelligence
+### 🧠 Interview Intelligence
 - Technical questions with answer frameworks
 - Behavioral questions with intent and response strategy
 - Preparation roadmap with daily focus and tasks
 
-### Productivity and UX
+### ⚡ Productivity and UX
 - Recent report history
 - Report detail page with section navigation
 - One-click Back to Home navigation and resume download flow
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
-### Frontend
+### 🎨 Frontend
 - React 19
 - React Router 7
 - Vite 7
 - Axios
 - Sass/SCSS
 
-### Backend
+### ⚙️ Backend
 - Node.js + Express 5
 - MongoDB + Mongoose
 - JWT authentication using HTTP cookies
@@ -100,14 +115,14 @@ PrepAce unifies everything in one workflow:
 - Google GenAI SDK for report and resume content generation
 - Puppeteer for server-side PDF rendering
 
-### Data Models
+### 🗄️ Data Models
 - users
 - blacklistTokens
 - InterviewReport
 
 ---
 
-## System Architecture
+## 🧱 System Architecture
 
 ```text
 Frontend (React + Vite)
@@ -130,7 +145,7 @@ High-level flow:
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```text
 GenAI-Resume Analysis/
@@ -157,7 +172,7 @@ GenAI-Resume Analysis/
 
 ---
 
-## User Journey
+## 🚀 User Journey
 
 1. Register or login
 2. Open dashboard
@@ -174,16 +189,16 @@ GenAI-Resume Analysis/
 
 ---
 
-## Routes and API
+## 🔌 Routes and API
 
-### Frontend Routes
+### 🖥️ Frontend Routes
 - /login
 - /register
 - /
 - /interview
 - /interview/:interviewId
 
-### Backend API
+### 🌐 Backend API
 
 Auth routes:
 - POST /api/auth/register
@@ -199,15 +214,15 @@ Interview routes:
 
 ---
 
-## Getting Started
+## 🏁 Getting Started
 
-### Prerequisites
+### ✅ Prerequisites
 - Node.js 18+
 - npm 9+
 - MongoDB Atlas URI (or local MongoDB)
 - Google GenAI API key
 
-### 1) Install Dependencies
+### 1. Install Dependencies
 
 Backend terminal:
 ```bash
@@ -221,7 +236,7 @@ cd Frontend
 npm install
 ```
 
-### 2) Configure Backend Environment
+### 2. Configure Backend Environment
 
 Create Backend/.env:
 
@@ -231,7 +246,7 @@ JWT_SECRET=<your_jwt_secret>
 GOOGLE_GENAI_API_KEY=<your_genai_api_key>
 ```
 
-### 3) Run Locally
+### 3. Run Locally
 
 Backend:
 ```bash
@@ -251,7 +266,7 @@ Local URLs:
 
 ---
 
-## Environment Variables
+## 🔐 Environment Variables
 
 ### Required
 - MONGO_URI
@@ -265,7 +280,7 @@ Local URLs:
 
 ---
 
-## Scripts
+## 📜 Scripts
 
 ### Backend
 - npm run dev: Start backend using nodemon
@@ -278,7 +293,7 @@ Local URLs:
 
 ---
 
-## Deployment Strategy
+## 🌍 Deployment Strategy
 
 ### Recommended (balanced cost + maintainability)
 - Frontend: Vercel
@@ -296,12 +311,12 @@ Benefits:
 Tradeoff:
 - Frontend and backend scale together
 
-### GitHub Auto Deploy
+### 🔄 GitHub Auto Deploy
 Vercel, Render, and Railway all support automatic deployments on push.
 
 ---
 
-## Production Checklist
+## ✅ Production Checklist
 
 1. Use process.env.PORT for backend runtime port
 2. Replace hardcoded frontend API URL with env config
@@ -312,7 +327,7 @@ Vercel, Render, and Railway all support automatic deployments on push.
 
 ---
 
-## Troubleshooting
+## 🩺 Troubleshooting
 
 ### Backend fails to start
 - Check MONGO_URI
@@ -330,7 +345,7 @@ Vercel, Render, and Railway all support automatic deployments on push.
 
 ---
 
-## Roadmap
+## 🗺️ Roadmap
 - Better frontend form validation and user-facing errors
 - Centralized backend error handler
 - Unit and integration tests
@@ -339,7 +354,7 @@ Vercel, Render, and Railway all support automatic deployments on push.
 
 ---
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome.
 
@@ -351,6 +366,12 @@ Contributions are welcome.
 
 ---
 
-## License
+## 📄 License
 
 No license file is currently defined. Add a LICENSE file before public distribution.
+
+---
+
+<div align="center">
+  Built with focus, shipped with purpose.
+</div>
