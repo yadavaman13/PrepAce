@@ -97,8 +97,8 @@ const preparationPlanSchema = new mongoose.Schema({
             required: [true, "Focus is required"]
         },
         tasks: {
-            type: String,
-            required: [true, "Task is required"]
+            type: [String],
+            required: [true, "Tasks are required"]
         }
 },{
     _id: false
