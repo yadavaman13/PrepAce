@@ -6,7 +6,7 @@ const app = express();
 
 //all routers
 const authRouter = require('./routes/auth.route');
-const interviewRouter = require('./routes/interview.routes');
+const interviewRouter = require('./routes/interview.route');
 
 // Middleware to parse JSON request bodies
 app.use(express.json());

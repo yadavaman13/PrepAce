@@ -5,12 +5,6 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_GENAI_API_KEY
 })
 
-const MIN_TECH = 5
-const MIN_BEHAVIORAL = 5
-const MIN_GAPS = 3 
-const PLAN_DAYS = 7
-
-
 const interviewReportSchema = z.object({
     matchScore: z.number().describe("A score between 0 and 100 indicating how well the candidate's profile matches the job describe"),
     technicalQuestions: z.array(z.object({
@@ -34,7 +28,6 @@ const interviewReportSchema = z.object({
     })).describe("A day-wise preparation plan for the candidate to follow in order to prepare for the interview effectively"),
     title: z.string().describe("The title of the job for which the interview report is generated"),
 })
-
 
 
 async function generateInterviewReport({ resume, selfDescription, jobDescription }) {
