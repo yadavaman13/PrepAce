@@ -14,6 +14,18 @@ const configuredOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || 
     .filter(Boolean);
 const allowedOrigins = configuredOrigins.length ? configuredOrigins : defaultOrigins;
 
+const corsOptions = {
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) return callback(null, true);
+
+        // In production, deny unknown browser origins without throwing 500.
+        if (isProduction) return callback(null, false);
+        return callback(null, true);
+    },
+    credentials: true
+};
+
 //all routers
 const authRouter = require('./routes/auth.route');
 const interviewRouter = require('./routes/interview.route');
@@ -21,15 +33,7 @@ const interviewRouter = require('./routes/interview.route');
 // Middleware to parse JSON request bodies
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) return callback(null, true);
-        if (isProduction) return callback(new Error('Not allowed by CORS'));
-        return callback(null, true);
-    },
-    credentials: true
-}));
+app.use('/api', cors(corsOptions));
 
 //using all routes
 app.use('/api/auth', authRouter);
