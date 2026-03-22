@@ -1,6 +1,19 @@
 const interviewReportModel = require("../models/interviewReport.model");
-const pdfParse = require("pdf-parse");
 const { generateInterviewReport, generateResumePdf } = require("../services/ai.service")
+
+async function extractPdfTextFromBuffer(buffer) {
+    const pdfParserModule = require("pdf-parse")
+
+    if (typeof pdfParserModule === "function") {
+        return pdfParserModule(buffer)
+    }
+
+    if (pdfParserModule && typeof pdfParserModule.PDFParse === "function") {
+        return (new pdfParserModule.PDFParse(Uint8Array.from(buffer))).getText()
+    }
+
+    throw new Error("Unsupported pdf-parse module API")
+}
 
 
 
@@ -8,7 +21,7 @@ const { generateInterviewReport, generateResumePdf } = require("../services/ai.s
  * @description Controller to generate interview report based on user self description, resume and job description.
  */
 async function generateInterviewReportController(req, res) {
-    const resumeContent = await pdfParse(req.file.buffer)
+    const resumeContent = await extractPdfTextFromBuffer(req.file.buffer)
     const { selfDescription, jobDescription } = req.body
 
     const interViewReportByAi = await generateInterviewReport({
