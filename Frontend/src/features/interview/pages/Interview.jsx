@@ -87,7 +87,7 @@ const Interview = () => {
                     <p style={{ marginTop: '0.75rem', marginBottom: '1rem', color: '#cfd7e6' }}>
                         Please go back and open it again from your reports list.
                     </p>
-                    <button className='button primary-button' onClick={() => navigate('/')}>
+                    <button className='button primary-button' onClick={() => navigate('/dashboard')}>
                         Back to Dashboard
                     </button>
                 </div>
@@ -109,8 +109,8 @@ const Interview = () => {
                     <div className="nav-content">
                         <button
                             type='button'
-                            className='interview-nav__back'
-                            onClick={() => navigate('/')}
+                            className='button primary-button interview-nav__back'
+                            onClick={() => navigate('/dashboard')}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
                             Back to Home

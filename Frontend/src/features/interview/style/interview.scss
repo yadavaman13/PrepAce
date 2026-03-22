@@ -64,21 +64,19 @@ $severity-low: #3fb950;
     &__back {
         display: flex;
         align-items: center;
-        gap: 0.4rem;
-        width: fit-content;
-        margin: 0 0 0.85rem 0.1rem;
-        padding: 0.15rem 0;
-        border: none;
-        background: transparent;
-        color: color.adjust($text-muted, $lightness: 10%);
+        justify-content: center;
+        gap: 0.6rem;
+        width: 100%;
+        margin: 0 0 1rem 0;
+        padding: 0.7rem 0.9rem;
         font-family: $font-stack;
-        font-size: 0.78rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: color 0.15s;
+        font-size: 0.92rem;
+        font-weight: 700;
+        line-height: 1;
+        border-radius: 1rem;
 
-        &:hover {
-            color: $text-primary;
+        svg {
+            stroke: currentColor;
         }
     }
 
