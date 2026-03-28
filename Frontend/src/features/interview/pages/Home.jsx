@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import "../style/home.scss"
 import { useInterview } from '../hooks/useInterview.js'
 import { useNavigate } from 'react-router'
@@ -8,7 +8,10 @@ const Home = () => {
     const { loading, generateReport,reports } = useInterview()
     const [ jobDescription, setJobDescription ] = useState("")
     const [ selfDescription, setSelfDescription ] = useState("")
+    const [ showAllReports, setShowAllReports ] = useState(false)
+    const [ visibleReportCount, setVisibleReportCount ] = useState(4)
     const resumeInputRef = useRef()
+    const reportsSectionRef = useRef()
 
     const navigate = useNavigate()
 
@@ -17,6 +20,28 @@ const Home = () => {
         const data = await generateReport({ jobDescription, selfDescription, resumeFile })
         navigate(`/interview/${data._id}`)
     }
+
+    useEffect(() => {
+        const updateVisibleCount = () => {
+            const availableWidth = reportsSectionRef.current?.clientWidth || window.innerWidth
+            setVisibleReportCount(availableWidth >= 1380 ? 5 : 4)
+        }
+
+        updateVisibleCount()
+        window.addEventListener('resize', updateVisibleCount)
+        return () => window.removeEventListener('resize', updateVisibleCount)
+    }, [])
+
+    useEffect(() => {
+        setShowAllReports(false)
+    }, [ visibleReportCount ])
+
+    const displayedReports = useMemo(() => {
+        if (showAllReports) return reports
+        return reports.slice(0, visibleReportCount)
+    }, [ reports, showAllReports, visibleReportCount ])
+
+    const hasHiddenReports = reports.length > visibleReportCount
 
     if (loading) {
         return (
@@ -84,9 +109,7 @@ const Home = () => {
                                 <input ref={resumeInputRef} hidden type='file' id='resume' name='resume' accept='.pdf,.docx' />
                             </label>
                         </div>
-
-                        {/* OR Divider */}
-                        <div className='or-divider'><span>OR</span></div>
+                        <br></br>
 
                         {/* Quick Self-Description */}
                         <div className='self-description'>
@@ -105,7 +128,7 @@ const Home = () => {
                             <span className='info-box__icon'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" stroke="#1a1f27" strokeWidth="2" /><line x1="12" y1="16" x2="12.01" y2="16" stroke="#1a1f27" strokeWidth="2" /></svg>
                             </span>
-                            <p>Either a <strong>Resume</strong> or a <strong>Self Description</strong> is required to generate a personalized plan.</p>
+                            <p><strong>Resume</strong> and a <strong>Self Description</strong> is required to generate a personalized plan.</p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +139,7 @@ const Home = () => {
                     <button
                         onClick={handleGenerateReport}
                         className='generate-btn'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" /></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.6144 17.7956 11.492 15.7854C12.2731 13.9966 13.6789 12.5726 15.4325 11.7942L17.8482 10.7219C18.6162 10.381 18.6162 9.26368 17.8482 8.92277L15.5079 7.88394C13.7092 7.08552 12.2782 5.60881 11.5105 3.75894L10.6215 1.61673C10.2916.821765 9.19319.821767 8.8633 1.61673L7.97427 3.75892C7.20657 5.60881 5.77553 7.08552 3.97685 7.88394L1.63658 8.92277C.868537 9.26368.868536 10.381 1.63658 10.7219L4.0523 11.7942C5.80589 12.5726 7.21171 13.9966 7.99275 15.7854L8.8704 17.7956C9.20776 18.5682 10.277 18.5682 10.6144 17.7956ZM19.4014 22.6899 19.6482 22.1242C20.0882 21.1156 20.8807 20.3125 21.8695 19.8732L22.6299 19.5353C23.0412 19.3526 23.0412 18.7549 22.6299 18.5722L21.9121 18.2532C20.8978 17.8026 20.0911 16.9698 19.6586 15.9269L19.4052 15.3156C19.2285 14.8896 18.6395 14.8896 18.4628 15.3156L18.2094 15.9269C17.777 16.9698 16.9703 17.8026 15.956 18.2532L15.2381 18.5722C14.8269 18.7549 14.8269 19.3526 15.2381 19.5353L15.9985 19.8732C16.9874 20.3125 17.7798 21.1156 18.2198 22.1242L18.4667 22.6899C18.6473 23.104 19.2207 23.104 19.4014 22.6899Z"></path></svg>
                         Generate My Interview Strategy
                     </button>
                 </div>
@@ -124,10 +147,10 @@ const Home = () => {
 
             {/* Recent Reports List */}
             {reports.length > 0 && (
-                <section className='recent-reports'>
-                    <h2>My Recent Interview Plans</h2>
+                <section className='recent-reports' ref={reportsSectionRef}>
+                    <h2>Recent Interview Plans</h2>
                     <ul className='reports-list'>
-                        {reports.map(report => (
+                        {displayedReports.map(report => (
                             <li key={report._id} className='report-item' onClick={() => navigate(`/interview/${report._id}`)}>
                                 <h3>{report.title || 'Untitled Position'}</h3>
                                 <p className='report-meta'>Generated on {new Date(report.createdAt).toLocaleDateString()}</p>
@@ -135,6 +158,15 @@ const Home = () => {
                             </li>
                         ))}
                     </ul>
+                    {(hasHiddenReports || showAllReports) && (
+                        <button
+                            type='button'
+                            className='reports-toggle-btn'
+                            onClick={() => setShowAllReports(prev => !prev)}
+                        >
+                            {showAllReports ? 'Show fewer plans' : 'View all plans'}
+                        </button>
+                    )}
                 </section>
             )}
 
