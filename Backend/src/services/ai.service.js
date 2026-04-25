@@ -64,8 +64,8 @@ async function generatePdfFromHtml(htmlContent) {
 
     const pdfBuffer = await page.pdf({ format: "A4", 
         margin: { 
-            top: "20mm", 
-            bottom: "20mm", 
+            top: "10mm", 
+            bottom: "10mm", 
             left: "15mm",
             right: "15mm" 
         }
