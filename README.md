@@ -366,12 +366,8 @@ Contributions are welcome.
 
 ---
 
-## 📄 License
-
-No license file is currently defined. Add a LICENSE file before public distribution.
-
----
-
 <div align="center">
-  Built with focus, shipped with purpose.
+  Built with ❤️ by <a href="https://github.com/yadavaman13">Yadav Aman</a>
+  
+  If you found this helpful, please give it a ⭐!
 </div>
