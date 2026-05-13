@@ -8,8 +8,9 @@ const app = express()
 app.use(express.static(path.join(__dirname, "public")))
 app.use(express.json())
 app.use(cookieParser())
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || "http://localhost:5173").split(",").map(o => o.trim());
 app.use(cors({
-    origin: ["http://localhost:5173", "https://prepace-rofb.onrender.com"],
+    origin: allowedOrigins,
     credentials: true
 }))
 
