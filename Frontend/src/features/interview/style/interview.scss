@@ -498,3 +498,22 @@ $severity-low: #3fb950;
         border-color: rgba($severity-low, 0.25);
     }
 }
+
+.resume-download-btn {
+    width: 100%;
+    min-height: 3.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.95rem 1rem;
+    line-height: 1.1;
+    text-align: center;
+
+    &__icon {
+        width: 1.15rem;
+        height: 1.15rem;
+        flex-shrink: 0;
+        display: block;
+    }
+}

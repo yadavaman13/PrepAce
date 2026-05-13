@@ -269,6 +269,34 @@ $font-stack:     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Robot
     gap: 0.5rem;
 }
 
+.field-error {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #ff7b8a;
+    line-height: 1.4;
+}
+
+.selected-file {
+    margin: 0.25rem 0 0;
+    font-size: 0.8rem;
+    color: $text-muted;
+}
+
+.toast-message {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 50;
+    padding: 0.9rem 1.1rem;
+    border-radius: 0.85rem;
+    background: rgba(18, 124, 79, 0.96);
+    color: #f5fffa;
+    border: 1px solid rgba(103, 225, 149, 0.35);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
 // ── Info Box ──────────────────────────────────────────────────────────────────
 .info-box {
     display: flex;

@@ -75,7 +75,8 @@ $accent-soft: rgba(255, 45, 120, 0.2);
   color: $text-primary;
   padding: 0.75rem 1.1rem;
   border-radius: 1rem;
-  font-weight: 600;
+  font-weight: 550;
+  font-size: medium;
 
   &:hover {
     border-color: color.adjust($accent, $lightness: 8%);
@@ -109,7 +110,8 @@ $accent-soft: rgba(255, 45, 120, 0.2);
 .navbar {
   width: 100%;
   margin: 0;
-  padding: 1rem clamp(10px, 2vw, 20px);
+  // padding: 1rem clamp(10px, 2vw, 20px);
+  padding: 25px 90px;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -124,7 +126,7 @@ $accent-soft: rgba(255, 45, 120, 0.2);
     display: flex;
     align-items: center;
     gap: 0;
-    font-size: 1.35rem;
+    font-size: x-large;
     font-weight: 800;
 
     .logo-icon {
