@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://prepace-rofb.onrender.com"],
     credentials: true
 }))
 
