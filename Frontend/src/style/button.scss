@@ -3,19 +3,37 @@
     outline: none;
     padding-inline: 1.5rem;
     padding-block: 0.75rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     cursor: pointer;
 
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &.primary-button{
-        background-color: rgb(226, 18, 80);
-        color: white;
+        background-color: #FFFFFF;
+        color: #000000;
         font-size: medium;
         font-weight: 550;
+        border: 1px solid #FFFFFF;
+
+        &:hover {
+            background-color: #E5E5E5;
+            border-color: #E5E5E5;
+        }
+    }
+
+    &.secondary-button, &.outline-button {
+        background-color: transparent;
+        color: #FFFFFF;
+        border: 1px solid #FFFFFF;
+        font-size: medium;
+        font-weight: 550;
+
+        &:hover {
+            background-color: #1A1A1A;
+        }
     }
 
     &:active{
-        transform: scale(0.9);
+        transform: scale(0.98);
     }
 }
