@@ -11,6 +11,15 @@ const Register = () => {
 
     const {loading, actionLoading, handleRegister} = useAuth()
     const [fieldErrors, setFieldErrors] = useState({})
+    const [toastMessage, setToastMessage] = useState("")
+
+    const showToast = (message) => {
+        setToastMessage(message)
+        window.clearTimeout(showToast.timeoutId)
+        showToast.timeoutId = window.setTimeout(() => {
+            setToastMessage("")
+        }, 3000)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,6 +41,8 @@ const Register = () => {
         setFieldErrors(nextFieldErrors)
 
         if(Object.keys(nextFieldErrors).length > 0){
+            const firstError = Object.values(nextFieldErrors)[0]
+            showToast(firstError)
             return
         }
 
@@ -39,7 +50,7 @@ const Register = () => {
             await handleRegister({username,email,password})
             navigate('/dashboard')
         } catch (err) {
-            return
+            showToast(err.message || 'Registration failed')
         }
     }
 
@@ -49,6 +60,13 @@ const Register = () => {
 
   return (
     <main>
+        {toastMessage && (
+            <div className='toast-message toast-message--error'>
+                <svg className='toast-message__icon' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>{toastMessage}</span>
+            </div>
+        )}
+
         <div className="form-container">
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>

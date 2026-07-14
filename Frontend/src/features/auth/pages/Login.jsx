@@ -10,9 +10,17 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fieldErrors, setFieldErrors] = useState({})
-    const [formError, setFormError] = useState("")
+    const [toastMessage, setToastMessage] = useState("")
 
     const navigate = useNavigate();
+
+    const showToast = (message) => {
+        setToastMessage(message)
+        window.clearTimeout(showToast.timeoutId)
+        showToast.timeoutId = window.setTimeout(() => {
+            setToastMessage("")
+        }, 3000)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,7 +30,7 @@ const Login = () => {
 
         if(bothMissing){
             setFieldErrors({})
-            setFormError('Enter both email and password to login')
+            showToast('Enter both email and password to login')
             return
         }
 
@@ -37,21 +45,18 @@ const Login = () => {
         setFieldErrors(nextFieldErrors)
 
         if(Object.keys(nextFieldErrors).length > 0){
-            setFormError('')
+            const firstError = Object.values(nextFieldErrors)[0]
+            showToast(firstError)
             return
         }
-
-        setFormError("")
 
         try {
             await handleLogin({email,password})
             navigate('/dashboard')
         } catch (err) {
-            setFormError('Enter correct email and password')
+            showToast(err.message || 'Login failed')
         }
     }
-
-    const submitError = formError
 
 
 
@@ -62,10 +67,16 @@ const Login = () => {
 
   return (
     <main>
+        {toastMessage && (
+            <div className='toast-message toast-message--error'>
+                <svg className='toast-message__icon' xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>{toastMessage}</span>
+            </div>
+        )}
+
         <div className="form-container">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                {submitError && <p className="form-error">{submitError}</p>}
                 <div className="input-group">
                     <label htmlFor='email'>Email</label>
                     <input 
