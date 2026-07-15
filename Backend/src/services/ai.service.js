@@ -57,24 +57,61 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
     return JSON.parse(response.text);
 }
 
+// async function generatePdfFromHtml(htmlContent) {
+//     const browser = await puppeteer.launch()
+//     const page = await browser.newPage()
+//     await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+
+//     const pdfBuffer = await page.pdf({ format: "A4", 
+//         margin: { 
+//             top: "10mm", 
+//             bottom: "10mm", 
+//             left: "15mm",
+//             right: "15mm" 
+//         }
+//     })
+
+//     await browser.close()
+
+//     return pdfBuffer
+
+// }
+
 async function generatePdfFromHtml(htmlContent) {
-    const browser = await puppeteer.launch()
-    const page = await browser.newPage()
-    await page.setContent(htmlContent, { waitUntil: "networkidle0" })
+    const browser = await puppeteer.launch({
+        executablePath: puppeteer.executablePath(),
+        headless: true,
+        args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+            "--single-process"
+        ]
+    });
 
-    const pdfBuffer = await page.pdf({ format: "A4", 
-        margin: { 
-            top: "10mm", 
-            bottom: "10mm", 
-            left: "15mm",
-            right: "15mm" 
-        }
-    })
+    try {
+        const page = await browser.newPage();
 
-    await browser.close()
+        await page.setContent(htmlContent, {
+            waitUntil: "networkidle0",
+        });
 
-    return pdfBuffer
+        const pdfBuffer = await page.pdf({
+            format: "A4",
+            printBackground: true,
+            margin: {
+                top: "10mm",
+                bottom: "10mm",
+                left: "15mm",
+                right: "15mm",
+            },
+        });
 
+        return pdfBuffer;
+    } finally {
+        await browser.close();
+    }
 }
 
 async function generateResumePdf({ resume, selfDescription, jobDescription  }){
