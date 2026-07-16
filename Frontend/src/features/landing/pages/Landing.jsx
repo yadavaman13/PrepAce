@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router';
 import '../style/landing.scss';
 import { useAuth } from '../../auth/hooks/useAuth';
 
 const Landing = () => {
     const navigate = useNavigate();
-    const { user } = useAuth();
+    const { user, handleLogout } = useAuth();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
     const impactItems = [
         'Role-Match Score',
@@ -46,6 +48,22 @@ const Landing = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        if (dropdownOpen) {
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [dropdownOpen]);
+
     const handleGetStarted = () => {
         if (user) {
             navigate('/dashboard');
@@ -59,6 +77,16 @@ const Landing = () => {
         targetSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
+    const handleLogoutClick = async () => {
+        setDropdownOpen(false);
+        try {
+            await handleLogout();
+            navigate('/');
+        } catch (err) {
+            console.error('Logout failed:', err);
+        }
+    };
+
     return (
         <div className="landing-page">
             <nav className="navbar">
@@ -67,7 +95,49 @@ const Landing = () => {
                 </div>
                 <div className="navbar__actions">
                     {user ? (
-                        <button className="button primary-button" onClick={() => navigate('/dashboard')}>Dashboard</button>
+                        <div className="navbar__avatar-container" ref={dropdownRef}>
+                            <button 
+                                className="navbar__avatar-btn" 
+                                onClick={() => setDropdownOpen(prev => !prev)}
+                                aria-haspopup="true"
+                                aria-expanded={dropdownOpen}
+                                aria-label="User menu"
+                            >
+                                <div className="navbar__avatar">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z" fill="currentColor"/>
+                                        <path d="M12.0002 14.5C6.86016 14.5 3.14016 17.65 3.00016 20.91C2.99016 21.11 3.07016 21.31 3.22016 21.45C3.37016 21.59 3.58016 21.66 3.79016 21.66H20.2102C20.4202 21.66 20.6302 21.58 20.7802 21.44C20.9302 21.3 21.0102 21.1 21.0002 20.9C20.8502 17.64 17.1302 14.5 12.0002 14.5Z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                            </button>
+                            {dropdownOpen && (
+                                <div className="navbar__dropdown">
+                                    <button 
+                                        className="navbar__dropdown-item" 
+                                        onClick={() => { navigate('/dashboard'); setDropdownOpen(false); }}
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="navbar__dropdown-icon">
+                                            <rect x="3" y="3" width="7" height="9" />
+                                            <rect x="14" y="3" width="7" height="5" />
+                                            <rect x="14" y="12" width="7" height="9" />
+                                            <rect x="3" y="16" width="7" height="5" />
+                                        </svg>
+                                        <span>Dashboard</span>
+                                    </button>
+                                    <button 
+                                        className="navbar__dropdown-item logout" 
+                                        onClick={handleLogoutClick}
+                                    >
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="navbar__dropdown-icon">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                            <polyline points="16 17 21 12 16 7" />
+                                            <line x1="21" y1="12" x2="9" y2="12" />
+                                        </svg>
+                                        <span>Logout</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     ) : (
                         <>
                             <button className="button outline-button" onClick={() => navigate('/login')}>Login</button>

@@ -138,6 +138,125 @@ $accent-soft: rgba(255, 255, 255, 0.05);
     display: flex;
     gap: 0.7rem;
   }
+
+  &__avatar-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  &__avatar-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    outline: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  &__avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 170px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 10;
+    transform-origin: top right;
+    animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &__dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    background: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    color: #E5E5E5;
+    font-size: 0.9rem;
+    font-weight: 550;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+
+    svg.navbar__dropdown-icon {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      transition: stroke 0.15s ease;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #FFFFFF;
+    }
+
+    &.logout {
+      color: #FF453A;
+
+      &:hover {
+        background: rgba(255, 69, 58, 0.12);
+        color: #FF453A;
+      }
+    }
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .hero {
