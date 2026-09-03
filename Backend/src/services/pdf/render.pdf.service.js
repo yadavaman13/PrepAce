@@ -9,8 +9,8 @@ import { resolvePDFOptions } from './options.pdf.service.js';
  * @param {string} params.html - The complete HTML string to render
  * @param {import('html-pdf-lite').RenderOptions} [params.options={}] - Optional PDF rendering options
  * @returns {Promise<Buffer>} - Resolves to a Node.js Buffer containing the generated PDF
- * @throws {PDFValidationError} If HTML is missing or invalid
- * @throws {PDFGenerationError} If underlying PDF generation fails
+ * @throws {PDFValidationError} If HTML is missing
+ * @throws {PDFGenerationError} If PDF generation fails
  */
 export async function makePDF({ html, options = {} } = {}) {
     if (html === undefined || html === null) {
