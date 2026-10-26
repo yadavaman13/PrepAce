@@ -1,37 +1,40 @@
-import { PDFValidationError } from './errors.pdf.service.js';
+const { PDFValidationError } = require('./errors.pdf.service');
 
 /**
- * Default options applied to all PDF renderings in Apex
+ * Default options applied to all PDF renderings in PrepAce
+ * Defaults are tuned for reliability across cloud-hosted web environments
+ * (Render, Railway, AWS Lambda, Docker, Heroku) without requiring host-level Chromium
+ * or variable font tables.
  */
-export const defaultPDFOptions = {
+const defaultPDFOptions = {
     margins: {
-        top: 36,
+        top: 28,
         right: 36,
-        bottom: 36,
+        bottom: 28,
         left: 36,
     },
     rootSelector: 'body',
     allowScripts: false,
     fetchExternalCss: false,
     enableInternalAnchors: true,
-    autoResolveFonts: true,
-    autoResolveEmojiFont: true,
+    autoResolveFonts: false,
+    autoResolveEmojiFont: false,
     autoDownloadEmojiFont: false,
     svgScale: 2,
     svgDpi: 72,
     loadTimeoutMs: 5000,
     externalCssTimeoutMs: 5000,
     imgLoadTimeoutMs: 5000,
-    ignoreInvalidImages: false,
+    ignoreInvalidImages: true,
 };
 
 /**
- * Validates and merges user options with Apex default options
+ * Validates and merges user options with PrepAce default options
  *
  * @param {object} [userOptions={}]
  * @returns {object} Merged configuration for html-pdf-lite
  */
-export function resolvePDFOptions(userOptions = {}) {
+function resolvePDFOptions(userOptions = {}) {
     if (userOptions !== null && typeof userOptions !== 'object') {
         throw new PDFValidationError('options must be an object');
     }
@@ -65,3 +68,8 @@ export function resolvePDFOptions(userOptions = {}) {
 
     return merged;
 }
+
+module.exports = {
+    defaultPDFOptions,
+    resolvePDFOptions,
+};

@@ -1,7 +1,7 @@
 /**
- * Base PDF error class for Apex PDF operations
+ * Base PDF error class for PrepAce PDF operations
  */
-export class PDFError extends Error {
+class PDFError extends Error {
     /**
      * @param {string} message
      * @param {object} [options]
@@ -28,7 +28,7 @@ export class PDFError extends Error {
 /**
  * Thrown when PDF input parameters, HTML, or options fail validation
  */
-export class PDFValidationError extends PDFError {
+class PDFValidationError extends PDFError {
     /**
      * @param {string} message
      * @param {object} [options]
@@ -45,7 +45,7 @@ export class PDFValidationError extends PDFError {
 /**
  * Thrown when underlying PDF generation/rendering fails
  */
-export class PDFGenerationError extends PDFError {
+class PDFGenerationError extends PDFError {
     /**
      * @param {string} message
      * @param {object} [options]
@@ -58,3 +58,9 @@ export class PDFGenerationError extends PDFError {
         });
     }
 }
+
+module.exports = {
+    PDFError,
+    PDFValidationError,
+    PDFGenerationError,
+};
